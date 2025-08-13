@@ -1,0 +1,13 @@
+[package]
+name = "BountyBoard"
+version = "1.0.0"
+authors = []
+
+[addresses]
+bounty_board = "7e6213fecd8feee9d3908368eb43825af78f6116ab922f5544574cd13272b4f8"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", rev = "mainnet", subdir = "aptos-framework" }
+AptosStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-stdlib", rev = "main" }
+
+[dev-dependencies]
