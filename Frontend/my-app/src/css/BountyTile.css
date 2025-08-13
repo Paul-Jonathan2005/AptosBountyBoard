@@ -116,3 +116,113 @@
 .view-button:hover {
   background-color: rgba(255, 255, 255, 0.35);
 }
+
+/* Responsive Styles */
+
+/* Mobile (<600px) */
+@media (max-width: 599px) {
+  .bounty-tile {
+    height: auto;
+    padding: 12px 12px;
+    flex-direction: column;
+  }
+
+  .bounty-title {
+    font-size: 20px;
+    margin-left: 12px;
+    margin-bottom: 6px;
+  }
+
+  .bounty-details-row {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 12px;
+  }
+
+  .bounty-type,
+  .bounty-reward,
+  .bounty-duration {
+    min-width: auto;
+    width: 100%;
+    margin: 4px 0;
+    padding: 6px 10px;
+    font-size: 13px;
+    justify-content: flex-start;
+    text-align: left;
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+  }
+
+  .bounty-duration {
+    text-align: left;
+  }
+
+  .view-button {
+    font-size: 16px;
+    padding: 6px 10px;
+    margin: 8px 12px 0 12px;
+    align-self: flex-start;
+  }
+
+  .bounty-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+}
+
+/* Tablet (600px - 1023px) */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .bounty-tile {
+    height: auto;
+    padding: 10px 20px;
+    flex-direction: column;
+  }
+
+  .bounty-title {
+    font-size: 22px;
+    margin-left: 20px;
+    margin-bottom: 4px;
+  }
+
+  .bounty-details-row {
+    flex-wrap: wrap;
+    font-size: 13px;
+    justify-content: flex-start;
+  }
+
+  .bounty-type,
+  .bounty-reward,
+  .bounty-duration {
+    min-width: 100px;
+    margin: 6px 10px;
+    padding: 7px 11px;
+    font-size: 14px;
+    justify-content: center;
+  }
+
+  .bounty-type {
+    margin-left: 20px;
+  }
+
+  .bounty-duration {
+    margin-right: 20px;
+    text-align: right;
+  }
+
+  .view-button {
+    font-size: 17px;
+    padding: 5px 9px;
+    margin-right: 20px;
+    align-self: flex-end;
+  }
+
+  .bounty-title-row {
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+}
+
+/* Desktop (>1024px) */
+/* Existing styles are preserved for desktop */

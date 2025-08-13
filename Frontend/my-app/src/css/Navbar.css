@@ -69,3 +69,88 @@
   border-radius: 5px;
   background-color: #334155;
 }
+
+/* Mobile styles (<600px) */
+@media (max-width: 599px) {
+  .sidebar {
+    width: 50px;
+    top: 80px;
+    bottom: 40px;
+    height: auto;
+  }
+  .sidebar.expanded {
+    width: 150px;
+  }
+  .sidebar nav ul {
+    margin-top: 5px;
+  }
+  .sidebar nav ul li {
+    padding: 8px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    display: block;
+  }
+  .sidebar nav ul li a {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .submenu {
+    margin-left: 0;
+    padding-left: 10px;
+    margin: 2px 0;
+  }
+  .submenu a li {
+    padding: 6px 10px;
+    margin-left: 10px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Tablet styles (600px - 1023px) */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .sidebar {
+    width: 55px;
+    top: 80px;
+    bottom: 40px;
+    height: auto;
+  }
+  .sidebar.expanded {
+    width: 180px;
+  }
+  .sidebar nav ul {
+    margin-top: 8px;
+  }
+  .sidebar nav ul li {
+    padding: 12px 15px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sidebar nav ul li a {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .submenu {
+    margin-left: 5px;
+    padding-left: 15px;
+    margin: 3px 0;
+  }
+  .submenu a li {
+    padding: 8px 15px;
+    margin-left: 15px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

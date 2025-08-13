@@ -6,3 +6,27 @@
   flex-direction: column;
   gap: 20px;
 }
+
+@media (max-width: 599px) {
+  .bounty-tile-list-container {
+    width: 90%;
+    margin: 20px auto;
+    padding-top: 60px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .bounty-tile-list-container {
+    width: 80%;
+    margin: 30px auto;
+    padding-top: 90px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bounty-tile-list-container {
+    width: 70%;
+    margin: 40px auto;
+    padding-top: 120px;
+  }
+}

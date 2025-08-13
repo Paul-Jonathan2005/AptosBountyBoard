@@ -606,3 +606,301 @@
     transform: rotate(360deg);
   }
 }
+
+/* Responsive styles */
+
+/* Mobile: max-width 599px */
+@media (max-width: 599px) {
+  .bounty-container {
+    max-width: 100%;
+    margin-top: 60px;
+    padding: 12px;
+  }
+
+  .bounty-details-container {
+    max-width: 100%;
+    margin: 20px 10px;
+    padding: 20px;
+  }
+
+  .bounty-details-info-row {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .bounty-details-type,
+  .bounty-details-reward,
+  .bounty-details-duration {
+    min-width: auto;
+    margin: 6px 0;
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 10px 12px;
+  }
+
+  .bounty-details-reward {
+    color: #1e293b;
+  }
+
+  .bounty-details-duration {
+    text-align: left;
+    margin-right: 0;
+  }
+
+  .bounty-details-description {
+    max-width: 100%;
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .chat-box {
+    max-width: 100%;
+    height: 400px;
+    margin: 15px 10px;
+    padding: 12px;
+  }
+
+  .chat-box-header {
+    font-size: 24px;
+    padding: 1px 8px;
+  }
+
+  .chat-input {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .chat-button {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  .submission-form {
+    max-width: 100%;
+    margin: 20px 10px;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .submission-input {
+    max-width: 100%;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .submission-button {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+
+  .final-submission-link {
+    margin: 20px 10px 40px 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .pay-button {
+    margin: 20px 10px;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .dispute-button {
+    margin: 15px 10px 30px 10px;
+    padding: 10px 16px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .vote-buttons-container {
+    flex-direction: column;
+    gap: 12px;
+    margin: 30px 10px 10px 10px;
+    padding-bottom: 10px;
+  }
+
+  .vote-button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+
+  .voting-timer {
+    font-size: 16px;
+    padding: 12px 20px;
+    margin: 15px 10px 30px 10px;
+  }
+
+  .dispute-result {
+    max-width: 100%;
+    margin: 15px 10px;
+    padding: 20px;
+  }
+
+  .dispute-result h3 {
+    font-size: 20px;
+  }
+
+  .dispute-result p,
+  .dispute-result strong,
+  .dispute-result .winner {
+    font-size: 14px;
+  }
+
+  .release-button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .tie-message {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+}
+
+/* Tablet: 600px to 1023px */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .bounty-container {
+    max-width: 90%;
+    margin-top: 80px;
+    padding: 14px;
+  }
+
+  .bounty-details-container {
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 30px;
+  }
+
+  .bounty-details-info-row {
+    flex-direction: row;
+    padding: 0 20px;
+  }
+
+  .bounty-details-type,
+  .bounty-details-reward,
+  .bounty-details-duration {
+    min-width: 140px;
+    margin: 5px 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .bounty-details-description {
+    max-width: 100%;
+    padding: 18px 24px;
+    font-size: 15px;
+  }
+
+  .chat-box {
+    max-width: 90%;
+    height: 450px;
+    margin: 20px auto;
+    padding: 14px;
+  }
+
+  .chat-box-header {
+    font-size: 28px;
+    padding: 1px 12px;
+  }
+
+  .chat-input {
+    font-size: 14px;
+    padding: 9px 12px;
+  }
+
+  .chat-button {
+    padding: 9px 16px;
+    font-size: 15px;
+  }
+
+  .submission-form {
+    max-width: 90%;
+    margin: 25px auto;
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .submission-input {
+    max-width: 100%;
+    font-size: 15px;
+    padding: 9px 12px;
+  }
+
+  .submission-button {
+    padding: 11px 18px;
+    font-size: 16px;
+  }
+
+  .final-submission-link {
+    margin: 25px auto 45px auto;
+    padding: 9px 18px;
+    font-size: 15px;
+  }
+
+  .pay-button {
+    margin: 25px auto;
+    padding: 13px 26px;
+    font-size: 16px;
+  }
+
+  .dispute-button {
+    margin: 18px auto 35px auto;
+    padding: 11px 20px;
+    font-size: 16px;
+    width: auto;
+  }
+
+  .vote-buttons-container {
+    flex-direction: row;
+    gap: 16px;
+    margin: 35px auto 12px auto;
+    padding-bottom: 16px;
+  }
+
+  .vote-button {
+    width: auto;
+    padding: 11px 24px;
+    font-size: 16px;
+  }
+
+  .voting-timer {
+    font-size: 17px;
+    padding: 13px 24px;
+    margin: 18px auto 35px auto;
+  }
+
+  .dispute-result {
+    max-width: 360px;
+    margin: 25px auto;
+    padding: 28px;
+  }
+
+  .dispute-result h3 {
+    font-size: 22px;
+  }
+
+  .dispute-result p,
+  .dispute-result strong,
+  .dispute-result .winner {
+    font-size: 15px;
+  }
+
+  .release-button {
+    width: auto;
+    padding: 13px 28px;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .tie-message {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+}
+
+/* Desktop: 1024px and above - existing styles remain */

@@ -119,3 +119,203 @@
   line-height: 1;
   margin-left: 5px;
 }
+
+/* Responsive styles */
+
+@media (max-width: 479px) {
+  .dashboard-container {
+    padding: 12px 8px;
+  }
+
+  .dashboard-title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dashboard-tile {
+    height: 50px;
+    padding: 16px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+
+  .dashboard-tile p {
+    font-size: 22px;
+  }
+
+  .reward-value {
+    font-size: 24px;
+  }
+
+  .reward-unit {
+    font-size: 10px;
+    margin-left: 2px;
+  }
+}
+
+@media (max-width: 599px) {
+  .dashboard-container {
+    padding: 20px 10px;
+  }
+
+  .dashboard-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dashboard-tile {
+    height: 60px;
+    padding: 24px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .dashboard-tile p {
+    font-size: 28px;
+  }
+
+  .reward-value {
+    font-size: 32px;
+  }
+
+  .reward-unit {
+    font-size: 14px;
+    margin-left: 3px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  .dashboard-tile {
+    height: 70px;
+    padding: 30px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .dashboard-tile p {
+    font-size: 32px;
+  }
+
+  .reward-value {
+    font-size: 38px;
+  }
+
+  .reward-unit {
+    font-size: 16px;
+    margin-left: 4px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .dashboard-tile {
+    height: 90px;
+    padding: 40px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 24px;
+    margin-bottom: 7px;
+  }
+
+  .dashboard-tile p {
+    font-size: 40px;
+  }
+
+  .reward-value {
+    font-size: 48px;
+  }
+
+  .reward-unit {
+    font-size: 20px;
+    margin-left: 6px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+  }
+
+  .dashboard-tile {
+    height: 100px;
+    padding: 48px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-tile p {
+    font-size: 44px;
+  }
+
+  .reward-value {
+    font-size: 52px;
+  }
+
+  .reward-unit {
+    font-size: 22px;
+    margin-left: 7px;
+  }
+}
+
+@media (min-width: 1601px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  .dashboard-tile {
+    height: 120px;
+    padding: 60px;
+  }
+
+  .dashboard-tile h3 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-tile p {
+    font-size: 54px;
+  }
+
+  .reward-value {
+    font-size: 64px;
+  }
+
+  .reward-unit {
+    font-size: 28px;
+    margin-left: 9px;
+  }
+}
