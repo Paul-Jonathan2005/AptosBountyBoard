@@ -1,6 +1,24 @@
 import axios from 'axios';
 import env_config from '../Config.js';
-import algosdk from 'algosdk';
+
+import { AptosClient } from "aptos";
+
+const aptosClient = new AptosClient("https://fullnode.testnet.aptoslabs.com");
+const MODULE_ADDRESS = "7e6213fecd8feee9d3908368eb43825af78f6116ab922f5544574cd13272b4f8";
+
+// Helper to normalize Aptos address to 0x-prefixed string and validate as hex
+const normalizeAddress = (addr) => {
+  if (addr === null || addr === undefined || addr === "") {
+    throw new Error("Wallet address is missing. Please connect your wallet.");
+  }
+  if (typeof addr !== "string") addr = String(addr);
+  if (!addr.startsWith("0x")) addr = "0x" + addr;
+  const hex = addr.slice(2);
+  if (!/^[0-9a-fA-F]+$/.test(hex)) {
+    throw new Error(`Invalid Aptos address: ${addr}`);
+  }
+  return addr;
+};
 
 const API = axios.create({
   baseURL: '/api', 
@@ -349,229 +367,230 @@ export const acceptBountyRequest = async (bountyId, candidateId) => {
   return response.data;
 };
 
-function encodeBoxKeyWithPrefix(prefix, id) {
-  const prefixBytes = new TextEncoder().encode(prefix);
-  const buffer = new ArrayBuffer(8);
-  new DataView(buffer).setBigUint64(0, BigInt(id));
-  const idBytes = new Uint8Array(buffer);
-  return new Uint8Array([...prefixBytes, ...idBytes]);
-}
-
 export const transferAlgosToSmartContracts = async (
   bountyId,
   rewardAmount,
   freelancerAddress,
-  activeAddress,
-  transactionSigner,
-  algodClient
+  activeAddress
 ) => {
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
-
-  const method = algosdk.ABIMethod.fromSignature(
-    'create_task(pay,uint64,address,address,uint64)void'
-  );
-
-  const reward = rewardAmount + env_config.smart_contract_app_fee
-  const paymentTxn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-    sender: activeAddress,
-    receiver: env_config.smart_contract_app_address,
-    amount: reward,
-    suggestedParams,
-  });
-
-  const boxKey = encodeBoxKeyWithPrefix("users", bountyId);
-
-  atc.addMethodCall({
-    appID: env_config.smart_contract_app_id,
-    method,
-    methodArgs: [
-      { txn: paymentTxn, signer: transactionSigner },
-      Number(bountyId),
-      activeAddress,
-      freelancerAddress,
-      rewardAmount
-    ],
-    boxes: [{ appIndex: env_config.smart_contract_app_id, name: boxKey }],
-    sender: activeAddress,
-    suggestedParams,
-    signer: transactionSigner,
-  });
-
-  await atc.execute(algodClient, 4);
-}
+  try {
+    // Auto-connect wallet if activeAddress is missing
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    // Check freelancer address as well
+    if (!freelancerAddress) {
+      throw new Error("Freelancer wallet address is missing.");
+    }
+    // Convert reward to octas (assume rewardAmount is in APT)
+    const rewardInOctas = BigInt(rewardAmount) * 100000000n;
+    // Add some extra amount for smart contract fees
+    const extraAmount = 10000000n;
+    const totalAmount = rewardInOctas + extraAmount;
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::create_task`,
+      type_arguments: [],
+      arguments: [
+        String(bountyId),
+        normalizeAddress(activeAddress),     // company address
+        normalizeAddress(freelancerAddress), // freelancer address
+        String(rewardInOctas)
+      ],
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    return txHash;
+  } catch (error) {
+    console.error("Error in transferAlgosToSmartContracts:", error);
+    throw error;
+  }
+};
 
 export const transferAlgosToFreelancer = async (
   bountyId,
-  activeAddress,
-  transactionSigner,
-  algodClient
-) =>{
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
-  suggestedParams.flatFee = true;
-  suggestedParams.fee = 4000;
-
-  const method = algosdk.ABIMethod.fromSignature(
-    'release_reward(uint64,address)uint64'
-  );
-  const boxKey = encodeBoxKeyWithPrefix("users", bountyId);
-  
-  atc.addMethodCall({
-      appID: env_config.smart_contract_app_id,
-      method,
-      methodArgs: [
-        Number(bountyId),
-        activeAddress,
+  activeAddress
+) => {
+  try {
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::release_reward`,
+      type_arguments: [],
+      arguments: [
+        String(bountyId)
       ],
-      sender: activeAddress,
-      suggestedParams,
-      boxes: [{ appIndex: env_config.smart_contract_app_id, name: boxKey }],
-      signer: transactionSigner,
-    });
-  
-    await atc.execute(algodClient, 4);
-
-}
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    return txHash;
+  } catch (error) {
+    console.error("Error in transferAlgosToFreelancer:", error);
+    throw error;
+  }
+};
 
 
 export const startDisputeSmartContract = async (
   bountyId,
-  activeAddress,
-  transactionSigner,
-  algodClient
+  activeAddress
 ) => {
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
-
-  const method = algosdk.ABIMethod.fromSignature(
-    'start_appeal(uint64,address)void'
-  );
-
-  const usersBoxKey = encodeBoxKeyWithPrefix("users", bountyId);
-  const disputesBoxKey = encodeBoxKeyWithPrefix("disputes", bountyId);
-
-  atc.addMethodCall({
-    appID: env_config.smart_contract_app_id,
-    method,
-    methodArgs: [
-      Number(bountyId),
-      activeAddress,
-    ],
-    boxes: [
-    { appIndex: env_config.smart_contract_app_id, name: usersBoxKey },
-    { appIndex: env_config.smart_contract_app_id, name: disputesBoxKey },
-  ],
-    sender: activeAddress,
-    suggestedParams,
-    signer: transactionSigner,
-  });
-
-  await atc.execute(algodClient, 4);
+  try {
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::start_appeal`,
+      type_arguments: [],
+      arguments: [
+        String(bountyId)
+      ],
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    return txHash;
+  } catch (error) {
+    console.error("Error in startDisputeSmartContract:", error);
+    throw error;
+  }
 };
 
 export const votingSmartContract = async(
   bountyId,
   voted_for,
-  activeAddress,
-  transactionSigner,
-  algodClient
+  activeAddress
 ) => {
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
-
-
-  const method = algosdk.ABIMethod.fromSignature(
-    'cast_vote(uint64,bool,address)void'
-  );
-  const disputesBoxKey = encodeBoxKeyWithPrefix("disputes", bountyId);
-  const vote_for_freelancer = voted_for === "FREELANCER"
-
-  atc.addMethodCall({
-    appID: env_config.smart_contract_app_id,
-    method,
-    methodArgs: [
-      Number(bountyId),
-      vote_for_freelancer,
-      activeAddress,
-    ],
-    boxes: [
-    { appIndex: env_config.smart_contract_app_id, name: disputesBoxKey },
-  ],
-    sender: activeAddress,
-    suggestedParams,
-    signer: transactionSigner,
-  });
-
-  await atc.execute(algodClient, 4);
-
+  try {
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    // voted_for: expects "FREELANCER" or "CLIENT", convert to boolean
+    const vote_for_freelancer = voted_for === "FREELANCER";
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::cast_vote`,
+      type_arguments: [],
+      arguments: [
+        String(bountyId),
+        vote_for_freelancer
+      ],
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    return txHash;
+  } catch (error) {
+    console.error("Error in votingSmartContract:", error);
+    throw error;
+  }
 };
 
-export const claimRewardSmartContract = async(
-  bountyId,
-  activeAddress,
-  transactionSigner,
-  algodClient
-) => {
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
-  suggestedParams.flatFee = true;
-  suggestedParams.fee = 4000
-  const method = algosdk.ABIMethod.fromSignature(
-    'resolve_dispute(uint64,address)uint64'
-  );
-  const usersBoxKey = encodeBoxKeyWithPrefix("users", bountyId);
-  const disputesBoxKey = encodeBoxKeyWithPrefix("disputes", bountyId);
+export const claimRewardSmartContract = async (bountyId, activeAddress) => {
+  try {
+    // Connect wallet if not connected
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
 
-  atc.addMethodCall({
-    appID: env_config.smart_contract_app_id,
-    method,
-    methodArgs: [
-      Number(bountyId),
-      activeAddress,
-    ],
-    boxes: [
-    { appIndex: env_config.smart_contract_app_id, name: usersBoxKey },
-    { appIndex: env_config.smart_contract_app_id, name: disputesBoxKey },
-  ],
-    sender: activeAddress,
-    suggestedParams,
-    signer: transactionSigner,
-  });
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::resolve_dispute`,
+      type_arguments: [],
+      arguments: [String(bountyId)], // bounty/task ID as string
+    };
 
-  await atc.execute(algodClient, 4);
+    // Sign and submit transaction using Petra wallet
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
 
+    // Wait for transaction to be confirmed on-chain
+    await aptosClient.waitForTransaction(txHash.hash);
+
+    return txHash;
+  } catch (error) {
+    console.error("Error in claimRewardSmartContract:", error);
+    throw error;
+  }
 };
 
 export const voterClaimRewardSmartContract = async(
   bountyId,
-  activeAddress,
-  transactionSigner,
-  algodClient
+  activeAddress
 ) => {
-  const atc = new algosdk.AtomicTransactionComposer();
-  const suggestedParams = await algodClient.getTransactionParams().do();
+  try {
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::claim_voting_reward`,
+      type_arguments: [],
+      arguments: [
+        String(bountyId)
+      ],
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    return txHash;
+  } catch (error) {
+    console.error("Error in voterClaimRewardSmartContract:", error);
+    throw error;
+  }
+};
+// Initialize the task store in the Move module for a given address
+export const initializeTaskStore = async (activeAddress) => {
+  try {
+    // Connect the wallet if address is missing
+    if (!activeAddress) {
+      const connectResponse = await window.aptos.connect();
+      activeAddress = connectResponse.address;
+      localStorage.setItem("walletAddress", activeAddress);
+    }
+    const payload = {
+      type: "entry_function_payload",
+      function: `${MODULE_ADDRESS}::task_bounty::init`,
+      type_arguments: [],
+      arguments: [],
+    };
+    const txHash = await window.aptos.signAndSubmitTransaction(payload);
+    await aptosClient.waitForTransaction(txHash.hash);
+    console.log("Task store initialized successfully:", txHash.hash);
+    return txHash.hash;
+  } catch (error) {
+    console.error("Error in initializeTaskStore:", error);
+    throw error;
+  }
+};
 
-  const method = algosdk.ABIMethod.fromSignature(
-    'claim_voting_reward(uint64,address)uint64'
-  );
-  const disputesBoxKey = encodeBoxKeyWithPrefix("disputes", bountyId);
+export const resourceExists = async (address) => {
+  try {
+    const resourceType = `0x${MODULE_ADDRESS}::task_bounty::TaskStore`;
+    const encodedResourceType = encodeURIComponent(resourceType);
 
-  atc.addMethodCall({
-    appID: env_config.smart_contract_app_id,
-    method,
-    methodArgs: [
-      Number(bountyId),
-      activeAddress,
-    ],
-    boxes: [
-    { appIndex: env_config.smart_contract_app_id, name: disputesBoxKey },
-  ],
-    sender: activeAddress,
-    suggestedParams,
-    signer: transactionSigner,
-  });
+    const response = await fetch(
+      `https://fullnode.testnet.aptoslabs.com/v1/accounts/${address}/resource/${encodedResourceType}`
+    );
 
-  await atc.execute(algodClient, 4);
+    if (response.ok) return true;
+    if (response.status === 404) return false;
 
+    console.warn(`Unexpected status fetching resource: ${response.status}`);
+    return false;
+  } catch (e) {
+    console.error("Error fetching resource:", e);
+    return false;
+  }
 };

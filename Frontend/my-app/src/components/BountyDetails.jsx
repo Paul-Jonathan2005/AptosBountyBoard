@@ -133,7 +133,7 @@ export default function BountyDetails() {
     try {
       const WalletAddress = localStorage.getItem("walletAddress");
       if (!WalletAddress) {
-        setAlertMessage('Please Connect To Pera Wallet From UserPage');
+        setAlertMessage('Please Connect To Petra Wallet From UserPage');
         setShowAlert(true);
         setType("success")
         return;
@@ -163,7 +163,7 @@ export default function BountyDetails() {
     try {
       const WalletAddress = localStorage.getItem("walletAddress");
       if (!WalletAddress) {
-        setAlertMessage('Please Connect To Pera Wallet From UserPage');
+        setAlertMessage('Please Connect To Petra Wallet From UserPage');
         setShowAlert(true);
         setType("success")
         return;
@@ -194,7 +194,7 @@ export default function BountyDetails() {
     try {
       const clientWalletAddress = localStorage.getItem("walletAddress");
       if (!clientWalletAddress) {
-        setAlertMessage('Please Connect To Pera Wallet From UserPage');
+        setAlertMessage('Please Connect To Petra Wallet From UserPage');
         setShowAlert(true);
         setType("success")
         return;
@@ -229,7 +229,7 @@ export default function BountyDetails() {
         setType("success")
         return;
       }
-      const callSmartContract = await claimRewardSmartContract(bountyId, activeAddress, transactionSigner, algodClient);
+      const callSmartContract = await claimRewardSmartContract(bountyId, activeAddress);
       const data = await transferAmount(UserId === bountyDetails.assigned_candidate_id, bountyId);
       setAlertMessage('Reward Claimed Successfully!');
       setShowAlert(true);
@@ -334,7 +334,7 @@ export default function BountyDetails() {
     try {
       const freelancerWalletAddress = localStorage.getItem("walletAddress");
       if (!freelancerWalletAddress) {
-        setAlertMessage('Please Connect To Pera Wallet From UserPage');
+        setAlertMessage('Please Connect To Petra Wallet From UserPage');
         setShowAlert(true);
         setType("success")
         return;
@@ -388,7 +388,7 @@ export default function BountyDetails() {
     return (
       <div className="loader-overlay">
         <div className="loader-container">
-          <p className="loader-text">Please open Pera Wallet</p>
+          <p className="loader-text">Please open Petra Wallet</p>
           <div className="loader-ring">
             <img src={Loader} alt="Loading..." className="loader-core" />
           </div>

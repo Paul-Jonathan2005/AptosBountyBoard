@@ -23,7 +23,7 @@ export default function CandidateTile({ candidateDetails, setShowAlert, setType,
         return;
       }
 
-      const callSmartContract = await transferAlgosToSmartContracts(bountyId, reward * 1000000, wallet_address, activeAddress, transactionSigner, algodClient);
+      const callSmartContract = await transferAlgosToSmartContracts(bountyId, reward, wallet_address, activeAddress, transactionSigner, algodClient);
       const data = await acceptBountyRequest(bountyId, id);
       setAlertMessage('Accepted Successfully');
       setShowAlert(true);

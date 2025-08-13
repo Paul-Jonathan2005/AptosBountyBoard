@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fetchUserDetails } from '../services/api';
-import { useWallet } from '@txnlab/use-wallet-react';
-import algosdk from 'algosdk';
+import { fetchUserDetails, initializeTaskStore, resourceExists } from '../services/api'; 
 import '../css/UserDetails.css';
-import AlgorandLogo from "../assets/image.png";
 
 export default function UserDetails() {
   const [userData, setUserData] = useState(null);
   const [walletInfo, setWalletInfo] = useState(null);
-  const { algodClient, activeAddress, signData, transactionSigner, wallets } = useWallet()
 
   useEffect(() => {
     const storedWalletInfo = localStorage.getItem('walletInfo');
@@ -37,13 +33,24 @@ export default function UserDetails() {
     const refreshBalance = async () => {
       if (walletInfo?.address) {
         try {
-          const accountInfo = await algodClient.accountInformation(walletInfo.address).do();
-          setWalletInfo((prev) => ({
-            ...prev,
-            balance: Number(accountInfo.amount) / 1e6
-          }));
+          const response = await fetch(`https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletInfo.address}/balance/0x1::aptos_coin::AptosCoin`);
+          const data = await response.json();
+          let balance = Number(data ?? 0);
+          if (isNaN(balance)) {
+            console.error("Invalid balance received:", data);
+            setWalletInfo((prev) => ({
+              ...prev,
+              balance: 0
+            }));
+          } else {
+            balance = balance / 1e8;
+            setWalletInfo((prev) => ({
+              ...prev,
+              balance
+            }));
+          }
         } catch (error) {
-          console.error('Failed to refresh balance:', error);
+          console.error("Failed to refresh balance:", error);
         }
       }
     };
@@ -52,15 +59,35 @@ export default function UserDetails() {
   }, [walletInfo?.address]);
 
   const handleWalletConnect = async () => {
-    const peraWallet = wallets[0];
+    if (!window.aptos) {
+      alert("Petra wallet extension not detected. Please install and enable it.");
+      return;
+    }
     try {
-      await peraWallet.connect();
-      const address = peraWallet.accounts[0].address;
-      const accountInfo = await algodClient.accountInformation(address).do();
-      const value = {
-        address,
-        balance: Number(accountInfo.amount) / 1e6
+      await window.aptos.connect();
+      const account = await window.aptos.account();
+      const address = account.address;
+
+      const exists = await resourceExists(address);
+      if (!exists) {
+        try {
+          await initializeTaskStore(address);
+          console.log("TaskStore initialized successfully");
+        } catch (initError) {
+          console.warn("TaskStore initialization error (might already be initialized):", initError);
+        }
+      } else {
+        console.log("TaskStore resource already exists for this address.");
       }
+
+      const response = await fetch(`https://fullnode.testnet.aptoslabs.com/v1/accounts/${address}/balance/0x1::aptos_coin::AptosCoin`);
+      const data = await response.json();
+      let balance = Number(data ?? 0);
+      if (isNaN(balance)) {
+        console.error("Invalid balance received:", data);
+      }
+      balance = balance / 1e8;
+      const value = { address, balance: isNaN(balance) ? 0 : balance };
       setWalletInfo(value);
       localStorage.setItem('walletAddress', address);
       localStorage.setItem('walletInfo', JSON.stringify(value));
@@ -70,9 +97,8 @@ export default function UserDetails() {
   }
 
   const handleWalletDisconnect = async () => {
-    const peraWallet = wallets[0];
     try {
-      await peraWallet.disconnect();
+      await window.aptos.disconnect();
       setWalletInfo(null);
       localStorage.removeItem('walletAddress');
       localStorage.removeItem('walletInfo');
@@ -126,23 +152,18 @@ export default function UserDetails() {
             className="connect-pera-button"
             onClick={handleWalletConnect}
           >
-            Connect to Pera Wallet
+            Connect to Petra Wallet
           </button>
         )}
         {walletInfo && (
           <div className="wallet-details">
             <div className="wallet-top-section">
-              <p className="wallet-balance">{walletInfo.balance}</p>
-              <img
-                src={AlgorandLogo}
-                alt="Algorand Logo"
-                className="algorand-logo"
-              />
+              <p className="wallet-balance">{walletInfo.balance ?? 0}</p>
             </div>
             <p className="wallet-address">{walletInfo.address}</p>
             <div className="wallet-bottom-section">
               <button onClick={handleWalletDisconnect} className="disconnect-wallet-button">
-                Disconnect Pera Wallet
+                Disconnect Petra Wallet
               </button>
             </div>
           </div>
