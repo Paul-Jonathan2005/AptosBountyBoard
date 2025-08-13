@@ -4,7 +4,7 @@ import '../css/Footer.css';
 export default function Footer() {
     return (
         <footer>
-            <p>© 2025 Algorand Community. All rights reserved.</p>
+            <p>© 2025 Aptos Community. All rights reserved.</p>
         </footer>
     );
 }

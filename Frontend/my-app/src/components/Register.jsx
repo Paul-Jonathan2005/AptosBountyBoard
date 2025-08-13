@@ -53,7 +53,7 @@ function Register() {
       justifyContent: 'center',
       alignItems: 'center',
       minHeight: 'calc(100vh - 80px)',
-      backgroundColor: '#f9fafb',
+      background: 'linear-gradient(90deg, #3c5d6e 0%, #0f2027 50%, #3c5d6e 100%)',
       padding: '2rem',
       marginTop: '45px'
     }}>

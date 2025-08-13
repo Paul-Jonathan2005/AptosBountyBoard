@@ -24,7 +24,7 @@ export default function FreelancerDashboard() {
           <h3>Earned Rewards</h3>
           <div className="reward-container">
             <div className="reward-value">{freelanceDashboardDetails.earned_task_reward}</div>
-            <div className="reward-unit">ALGOS</div>
+            <div className="reward-unit">APTOS</div>
           </div>
         </div>
         <div className="dashboard-tile tile-blue-1">

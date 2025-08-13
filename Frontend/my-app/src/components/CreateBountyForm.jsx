@@ -46,7 +46,7 @@ export default function CreateBountyForm({ onClose, setShowAlert, setType, setAl
           <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
           <input name="descrition" placeholder="Description" value={formData.descrition} onChange={handleChange} required />
           <input name="task_type" placeholder="Task Type" value={formData.task_type} onChange={handleChange} required />
-          <input name="amount" type="number" placeholder="Reward (ALGOS)" value={formData.amount} onChange={handleChange} required />
+          <input name="amount" type="number" placeholder="Reward (APTOS)" value={formData.amount} onChange={handleChange} required />
           <input name="deadline" type="number" min="0" placeholder="Duration (months)" value={formData.deadline} onChange={handleChange} required />
           <div className="modal-actions">
             <button type="submit">Submit</button>

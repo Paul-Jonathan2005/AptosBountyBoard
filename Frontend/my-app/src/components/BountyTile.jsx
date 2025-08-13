@@ -40,7 +40,7 @@ export default function BountyTile({ BountyDetails, bountyType, viewerType }) {
       </div>
       <div className="bounty-details-row">
         <div className="bounty-type">{task_type}</div>
-        <div className="bounty-reward">{amount} ALGOS</div>
+        <div className="bounty-reward">{amount} APTOS</div>
         <div className="bounty-duration">{deadline} MONTHS</div>
       </div>
     </div>

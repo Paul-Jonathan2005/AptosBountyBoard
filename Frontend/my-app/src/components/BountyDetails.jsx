@@ -426,7 +426,7 @@ export default function BountyDetails() {
           </div>
           <div className="bounty-details-info-row">
             <span className="bounty-details-type">{bountyDetails.task_type}</span>
-            <span className="bounty-details-reward">{bountyDetails.amount} ALGOS</span>
+            <span className="bounty-details-reward">{bountyDetails.amount} Aptos</span>
             <span className="bounty-details-duration">{bountyDetails.deadline} MONTHS</span>
           </div>
         </div>
