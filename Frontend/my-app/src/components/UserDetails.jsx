@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchUserDetails, initializeTaskStore, resourceExists } from '../services/api'; 
 import '../css/UserDetails.css';
+import { motion } from 'framer-motion';
 
 export default function UserDetails() {
   const [userData, setUserData] = useState(null);
@@ -107,9 +108,34 @@ export default function UserDetails() {
     }
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 20, duration: 0.8 } }
+  };
+
+  const starContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      }
+    }
+  };
+
+  const starVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  };
+
   return (
     <div className="user-page-layout">
-      <div className="user-details-container">
+      <motion.div 
+        className="user-details-container"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        whileHover={{ scale: 1.02 }}
+      >
         <h2 className="user-details-title">User Details</h2>
         {userData ? (
           <div className="user-details-list">
@@ -120,20 +146,26 @@ export default function UserDetails() {
             <div className="user-details-value">{userData.last_name}</div>
 
             <div className="user-details-label">Rating:</div>
-            <div className="user-details-value rating-stars">
+            <motion.div 
+              className="user-details-value rating-stars"
+              variants={starContainer}
+              initial="hidden"
+              animate="visible"
+            >
               {[...Array(5)].map((_, i) => {
                 const fill = Math.min(Math.max(userData.rating - i, 0), 1);
                 return (
-                  <span
+                  <motion.span
                     key={i}
                     className="star"
                     style={{ '--fill': `${fill * 100}%` }}
+                    variants={starVariants}
                   >
                     ★
-                  </span>
+                  </motion.span>
                 );
               })}
-            </div>
+            </motion.div>
 
             <div className="user-details-label">LinkedIn:</div>
             <div className="user-details-value">
@@ -145,15 +177,23 @@ export default function UserDetails() {
         ) : (
           <div>Loading...</div>
         )}
-      </div>
-      <div className="pera-wallet-container">
+      </motion.div>
+      <motion.div 
+        className="pera-wallet-container"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        whileHover={{ scale: 1.02 }}
+      >
         {!walletInfo && (
-          <button
+          <motion.button
             className="connect-pera-button"
             onClick={handleWalletConnect}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Connect to Petra Wallet
-          </button>
+          </motion.button>
         )}
         {walletInfo && (
           <div className="wallet-details">
@@ -162,13 +202,18 @@ export default function UserDetails() {
             </div>
             <p className="wallet-address">{walletInfo.address}</p>
             <div className="wallet-bottom-section">
-              <button onClick={handleWalletDisconnect} className="disconnect-wallet-button">
+              <motion.button 
+                onClick={handleWalletDisconnect} 
+                className="disconnect-wallet-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 Disconnect Petra Wallet
-              </button>
+              </motion.button>
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

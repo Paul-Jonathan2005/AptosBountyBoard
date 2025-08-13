@@ -9,7 +9,9 @@
   font-size: 40px;
   font-weight: 800;
   margin-bottom: 40px;
-  color: #ffffff;
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .dashboard-grid {
@@ -24,13 +26,12 @@
   padding: 36px;
   color: white;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .dashboard-tile:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-tile h3 {
@@ -46,17 +47,17 @@
 }
 
 .tile-blue {
-  background: linear-gradient(135deg, #4a4aff, #8a8aff);
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
 }
 
 .tile-green {
-  background: linear-gradient(135deg, #50c878, #80e0a0);
+  background: linear-gradient(135deg, #059669, #34d399);
 }
 
 .tile-orange {
-  background: linear-gradient(135deg, #ff7f50, #ffaa80);
+  background: linear-gradient(135deg, #d97706, #fbbf24);
 }
 
 .tile-red {
-  background: linear-gradient(135deg, #ff4d4d, #ff8080);
+  background: linear-gradient(135deg, #dc2626, #f87171);
 }
