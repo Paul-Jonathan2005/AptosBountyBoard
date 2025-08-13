@@ -4,7 +4,7 @@ import extractErrorMessage from '../utils/extractErrorMessage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
-import '../css/Register.css';
+
 
 function Register() {
   const navigate = useNavigate();
@@ -48,7 +48,15 @@ function Register() {
   };
 
   return (
-    <div className="register-container">
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: 'calc(100vh - 80px)',
+      backgroundColor: '#f9fafb',
+      padding: '2rem',
+      marginTop: '45px'
+    }}>
       {showAlert && (
         <Alert
           message={alertMessage}
@@ -58,8 +66,17 @@ function Register() {
         />
       )}
 
-      <form onSubmit={handleSubmit} className="register-form">
-        <h2 className="register-title">Register</h2>
+      <form onSubmit={handleSubmit} style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '2rem',
+        borderRadius: '8px',
+        backgroundColor: 'white',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        width: '360px',
+        fontFamily: 'Ubuntu, sans-serif'
+      }}>
+        <h2 style={{ marginBottom: '1rem', textAlign: 'center', color: '#111827' }}>Register</h2>
 
         <input
           type="text"
@@ -68,7 +85,7 @@ function Register() {
           value={formData.username}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="password"
@@ -77,7 +94,7 @@ function Register() {
           value={formData.password}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="text"
@@ -86,7 +103,7 @@ function Register() {
           value={formData.first_name}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="text"
@@ -95,7 +112,7 @@ function Register() {
           value={formData.last_name}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="tel"
@@ -104,7 +121,7 @@ function Register() {
           value={formData.phone_number}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="email"
@@ -113,7 +130,7 @@ function Register() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
 
         <select
@@ -121,7 +138,7 @@ function Register() {
           value={formData.gender}
           onChange={handleChange}
           required
-          className="register-input"
+          style={{ ...inputStyle, marginBottom: '1rem' }}
         >
           <option value="" disabled>Select Gender</option>
           <option value="male">Male</option>
@@ -138,7 +155,7 @@ function Register() {
           value={formData.age}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
         <input
           type="text"
@@ -147,7 +164,7 @@ function Register() {
           value={formData.company_name}
           onChange={handleChange}
           required
-          className="register-input"
+          style={inputStyle}
         />
 
         <input
@@ -156,12 +173,21 @@ function Register() {
           placeholder="LinkedIn Profile Link"
           value={formData.linkedin_profile_link}
           onChange={handleChange}
-          className="register-input"
+          style={inputStyle}
         />
 
         <button
           type="submit"
-          className="register-button"
+          style={{
+            padding: '0.75rem',
+            backgroundColor: '#0f2027',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            fontSize: '1rem'
+          }}
         >
           Submit
         </button>
@@ -169,5 +195,12 @@ function Register() {
     </div>
   );
 }
+
+const inputStyle = {
+  padding: '0.5rem',
+  marginBottom: '1rem',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+};
 
 export default Register;
