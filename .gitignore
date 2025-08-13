@@ -1,4 +1,4 @@
 Backend/*/__pycache__/
 Backend/*/*.pyc
 Backend/*/migrations/
-
+node_modules/
