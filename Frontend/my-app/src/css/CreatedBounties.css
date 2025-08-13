@@ -3,20 +3,20 @@
   bottom: 50px;
   right: 13px;
   padding: 14px 24px;
-  background-color: #05481d;
+  background-color: #5a5aff;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1000;
   transition: background-color 0.3s ease;
 }
 
 .create-bounty-button:hover {
-  background-color: #337237;
+  background-color: #4a4aff;
 }
 
 .no-bounties {
@@ -27,7 +27,7 @@
   height: 60vh;
   text-align: center;
   padding: 20px;
-  color: #eaf2fd;
+  color: #a0a0c0;
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
   font-size: 20px;

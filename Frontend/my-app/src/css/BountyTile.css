@@ -1,21 +1,27 @@
 .bounty-tile {
   width: 100%;
   height: 85px;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background-color: #1a1a2e;
+  border: 1px solid #3a3a5e;
   border-radius: 10px;
   padding: 8px 16px;
   margin: 0 auto 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   font-family: 'Ubuntu', sans-serif;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bounty-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bounty-title {
   font-size: 26px;
   font-weight: 700;
-  color: #f8fbf9;
+  color: #ffffff;
   margin-bottom: 2px;
   margin-left: 30px;
 }
@@ -25,7 +31,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  color: #334155;
+  color: #c0c0e0;
   line-height: 1;
 }
 
@@ -40,8 +46,8 @@
   padding: 8px 12px;
   margin: 5px 8px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   font-weight: 500;
   backdrop-filter: blur(4px);
 }
@@ -49,49 +55,49 @@
 .bounty-type {
   text-align: left;
   margin-left: 30px;
-  background: linear-gradient(90deg, #3b82f6, #93c5fd);
+  background: linear-gradient(90deg, #4a4aff, #8a8aff);
   color: white;
 }
 
 .bounty-reward {
-  background: linear-gradient(90deg, #f8b705fa, #fbe769);
-  color: #1e293b;
+  background: linear-gradient(90deg, #ff7f50, #ffaa80);
+  color: #1a1a2e;
 }
 
 .bounty-duration {
   text-align: right;
   margin-right: 30px;
-  background: linear-gradient(90deg, #ff6b6b, #ffa07a);
+  background: linear-gradient(90deg, #ff4d4d, #ff8080);
   color: white;
 }
 
 .bounty-tile-inprogress {
-  background: linear-gradient(90deg, #106cdc 0%, #6997e2 100%);
+  background: linear-gradient(90deg, #4a4aff 0%, #8a8aff 100%);
   color: white;
 }
 
 .bounty-tile-completed {
-  background: linear-gradient(90deg, #f59e0b 0%, #fcd34d 100%);
+  background: linear-gradient(90deg, #ff7f50 0%, #ffaa80 100%);
   color: white;
 }
 
 .bounty-tile-paid {
-  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  background: linear-gradient(90deg, #50c878 0%, #80e0a0 100%);
   color: white;
 }
 
 .bounty-tile-disputed {
-  background: linear-gradient(135deg, #dc2626, #f87171);
+  background: linear-gradient(135deg, #ff4d4d, #ff8080);
   color: white;
 }
 
 .bounty-tile-assigned {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #9d50ff, #c880ff);
   color: white;
 }
 
 .bounty-tile-requested {
-  background: linear-gradient(135deg, #36d1dc, #11627b);
+  background: linear-gradient(135deg, #50c878, #80e0a0);
   color: white;
 }
 
@@ -108,11 +114,11 @@
   cursor: pointer;
   padding: 4px 8px;
   margin-right: 30px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   transition: background-color 0.2s ease;
 }
 
 .view-button:hover {
-  background-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.2);
 }

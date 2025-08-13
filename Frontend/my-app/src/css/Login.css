@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 40px);
-  background: linear-gradient(90deg, #3c5d6e 0%, #033950 50%,#215165  100%);
+  background: #0f0f1e;
   position: relative;
   overflow: hidden;
   padding: 1rem;
@@ -29,8 +29,8 @@
   flex-direction: column;
   padding: 3.5rem;
   border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff, #f3f4f6);
-  box-shadow: 0 8px 20px rgba(26, 55, 68, 0.3);
+  background: #1a1a2e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   width: 320px;
   font-family: 'Ubuntu', sans-serif;
 }
@@ -38,33 +38,33 @@
 .login-title {
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #111827;
+  color: #ffffff;
   font-size: 2rem;
   font-weight: 700;
-  text-shadow: 1px 1px 3px rgba(26, 55, 68, 0.3);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .login-input {
   padding: 1rem;
   margin-bottom: 1.5rem;
-  border: 1.5px solid #ccc;
+  border: 1.5px solid #3a3a5e;
   border-radius: 6px;
-  background-color: #f9fafb;
+  background-color: #2a2a4e;
   font-size: 1rem;
-  color: #111827;
+  color: #e0e0e0;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
 }
 
 .login-input::placeholder {
-  color: #9ca3af;
+  color: #a0a0c0;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .login-input:focus {
   outline: none;
-  background-color: #ffffff;
-  border: 1.5px solid #406882;
-  box-shadow: 0 0 8px rgba(26, 55, 68, 0.4);
+  background-color: #3a3a5e;
+  border: 1.5px solid #8a8aff;
+  box-shadow: 0 0 8px rgba(138, 138, 255, 0.4);
 }
 
 .login-input:focus::placeholder {
@@ -75,20 +75,20 @@
 
 .login-button {
   padding: 0.75rem;
-  background: linear-gradient(135deg, rgba(26, 55, 68, 0.85), rgba(64, 104, 130, 0.85));
+  background: linear-gradient(135deg, #5a5aff, #8a8aff);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   backdrop-filter: blur(8px);
-  box-shadow: 0 0 10px rgba(64, 104, 130, 0.5);
+  box-shadow: 0 0 10px rgba(90, 90, 255, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(64, 104, 130, 0.8), 0 0 10px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(90, 90, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .login-register-link {
@@ -96,13 +96,14 @@
   font-size: 14px;
   text-align: center;
   letter-spacing: 0.05em;
+  color: #e0e0e0;
 }
 
 .login-register-link a {
-  color: #ff9800;
+  color: #a0a0ff;
   font-weight: 600;
   font-size: 1rem;
-  background-color: rgba(255, 152, 0, 0.1);
+  background-color: rgba(203, 203, 210, 0.1);
   padding: 4px 8px;
   border-radius: 4px;
   text-decoration: none;
@@ -112,8 +113,8 @@
 }
 
 .login-register-link a:hover {
-  color: #406882;
-  border-color: #406882;
-  text-shadow: 0 0 8px #406882;
-  background-color: rgba(255, 152, 0, 0.2);
+  color: #c0c0ff;
+  border-color: #c0c0ff;
+  text-shadow: 0 0 8px #c0c0ff;
+  background-color: rgba(138, 138, 255, 0.2);
 }

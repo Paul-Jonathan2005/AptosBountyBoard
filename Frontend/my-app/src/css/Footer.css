@@ -5,10 +5,10 @@ footer {
   height: 40px;
   width: 100%;
   text-align: center;
-  color: #d1d5db;
+  color: #a0a0c0;
   font-size: 14px;
   font-family: 'Ubuntu', sans-serif;
   padding: 0px 0;
-  background: linear-gradient(90deg, #0f5b82 0%, #1a3744 50%, #0f5b82 100%);
+  background: #1a1a2e;
   z-index: 10;
 }

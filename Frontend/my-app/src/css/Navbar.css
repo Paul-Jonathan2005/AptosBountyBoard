@@ -6,7 +6,7 @@
   /* height of footer */
   left: 0;
   width: 60px;
-  background-color: #0f2027;
+  background-color: #1a1a2e;
   color: white;
   transition: width 0.3s ease;
   overflow-x: hidden;
@@ -30,7 +30,7 @@
 }
 
 .sidebar nav ul li:hover {
-  background-color: #1a3744;
+  background-color: #2a2a4e;
 }
 
 .sidebar nav ul li a {
@@ -53,13 +53,13 @@
 }
 
 .submenu a li {
-  color: #d1d5db;
+  color: #c0c0e0;
   font-size: 14px;
   text-decoration: none;
 }
 
 .submenu a li:hover {
-  background-color: #1f2937;
+  background-color: #2a2a4e;
   border-radius: 5px;
 }
 
@@ -67,5 +67,5 @@
   color: #ffffff;
   font-weight: bold;
   border-radius: 5px;
-  background-color: #334155;
+  background-color: #3a3a5e;
 }
